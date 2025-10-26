@@ -1,37 +1,40 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
+import * as React from 'react';
+import { StyleSheet, View, Text, Image, Button } from 'react-native';
+import { ImagePickerResponse, launchImageLibrary } from 'react-native-image-picker';
 
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+export default function App() {
+  const [photo, setPhoto] = React.useState<string | null>(null);
 
-function App() {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  return (
-    <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
-    </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
+  const pickImage = async () => {
+    try {
+      const result = await launchImageLibrary({
+        mediaType: 'photo',
+      });
+      if (result.assets && result.assets.length > 0) {
+        const asset = result.assets[0];
+        if (asset && asset.uri) {
+          setPhoto(asset.uri);
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
+      {
+        !photo &&
+        <Button title="Pick Image" onPress={pickImage} />
+      }
+      <View style={styles.container}>
+        {photo && (
+          <Image
+            source={{ uri: photo }}
+            style={{ flex: 1 }}
+          />
+        )}
+      </View>
     </View>
   );
 }
@@ -39,7 +42,9 @@ function AppContent() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
+  },
+  text: {
+    color: '#d50000',
   },
 });
-
-export default App;
