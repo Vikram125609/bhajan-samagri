@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { View, Text, Image, Pressable, Dimensions, ActivityIndicator } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 import Svg, { Circle } from 'react-native-svg';
 
 export default function App() {
@@ -63,97 +64,104 @@ export default function App() {
   };
 
   return (
-    <View style={{ backgroundColor: '#9b35daff', height: '100%' }}>
-      <View style={{ alignItems: 'center' }}>
-        <View style={{ position: 'relative' }}>
-          {imageLoading && (
-            <View style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              alignItems: 'center',
-              justifyContent: 'center',
-              zIndex: 1,
-              backgroundColor: 'rgba(0, 0, 0, 0.3)',
-              borderRadius: 8,
-              marginVertical: 10,
-              width: screenWidth - 20,
-              height: imageHeight,
-            }}>
-              <ActivityIndicator size="large" color="#ffffff" />
-            </View>
-          )}
-          <Image
-            source={{ uri: images[photoIndex] }}
-            onLoadStart={onImageLoadStart}
-            onLoad={onImageLoad}
-            style={{
-              width: screenWidth - 20,
-              height: imageHeight,
-              resizeMode: 'cover',
-              marginVertical: 10,
-              borderRadius: 8,
-            }}
-          />
-        </View>
-        <View style={{ backgroundColor: '#f0ad4e', width: '50%', margin: 'auto', borderRadius: 8, marginBottom: 10 }}>
-          <Pressable onPress={handleChangeImage} style={{ padding: 5 }}>
-            <Text style={{
-              color: '#fff',
-              fontWeight: '600',
-              fontSize: 18,
-              textAlign: 'center'
-            }}>
-              Change Image
-            </Text>
-          </Pressable>
-        </View>
-      </View>
-
-      <Pressable 
-        onPressIn={handlePressIn} 
-        onPressOut={handlePressOut} 
-        style={{ 
-          alignItems: 'center', 
-          justifyContent: 'center',
-          flex: 1,
-          paddingTop: 40
-        }}
+    <View style={{ height: '100%' }}>
+      <LinearGradient
+        colors={['#812ab8ff', '#8623c9ff', '#8400ffff']}
+        start={{ x: 1, y: 0 }}
+        end={{ x: 0, y: 0 }}
+        style={{ height: '100%' }}
       >
-        <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-          <Svg width={ringSize} height={ringSize} style={{ transform: [{ rotate: '-90deg' }] }}>
-            <Circle
-              cx={ringSize / 2}
-              cy={ringSize / 2}
-              r={radius}
-              stroke="#cdc3c3ff"
-              strokeWidth={strokeWidth}
-              fill="none"
+        <View style={{ alignItems: 'center' }}>
+          <View style={{ position: 'relative' }}>
+            {imageLoading && (
+              <View style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                alignItems: 'center',
+                justifyContent: 'center',
+                zIndex: 1,
+                backgroundColor: 'rgba(0, 0, 0, 0.3)',
+                borderRadius: 8,
+                marginVertical: 10,
+                width: screenWidth - 20,
+                height: imageHeight,
+              }}>
+                <ActivityIndicator size="large" color="#ffffff" />
+              </View>
+            )}
+            <Image
+              source={{ uri: images[photoIndex] }}
+              onLoadStart={onImageLoadStart}
+              onLoad={onImageLoad}
+              style={{
+                width: screenWidth - 20,
+                height: imageHeight,
+                resizeMode: 'cover',
+                marginVertical: 10,
+                borderRadius: 8,
+              }}
             />
-            <Circle
-              cx={ringSize / 2}
-              cy={ringSize / 2}
-              r={radius}
-              stroke="#ffffff"
-              strokeWidth={strokeWidth}
-              fill="none"
-              strokeDasharray={circumference}
-              strokeDashoffset={strokeDashoffset}
-              strokeLinecap="round"
-            />
-          </Svg>
-          <View style={{ position: 'absolute', alignItems: 'center' }}>
-            <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#ffffff' }}>
-              {count}
-            </Text>
+          </View>
+          <View style={{ backgroundColor: '#f0ad4e', width: '50%', margin: 'auto', borderRadius: 8, marginBottom: 10 }}>
+            <Pressable onPress={handleChangeImage} style={{ padding: 5 }}>
+              <Text style={{
+                color: '#fff',
+                fontWeight: '600',
+                fontSize: 18,
+                textAlign: 'center'
+              }}>
+                Change Image
+              </Text>
+            </Pressable>
           </View>
         </View>
-        <Text style={{ marginTop: 30, fontSize: 16, color: '#ffffff', textAlign: 'center' }}>
-          Total Malas {totalMalas}
-        </Text>
-      </Pressable>
+
+        <Pressable
+          onPressIn={handlePressIn}
+          onPressOut={handlePressOut}
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            flex: 1,
+            paddingTop: 40
+          }}
+        >
+          <View style={{ alignItems: 'center', justifyContent: 'center' }}>
+            <Svg width={ringSize} height={ringSize} style={{ transform: [{ rotate: '-90deg' }] }}>
+              <Circle
+                cx={ringSize / 2}
+                cy={ringSize / 2}
+                r={radius}
+                stroke="#cdc3c3ff"
+                strokeWidth={strokeWidth}
+                fill="none"
+              />
+              <Circle
+                cx={ringSize / 2}
+                cy={ringSize / 2}
+                r={radius}
+                stroke="#ffffff"
+                strokeWidth={strokeWidth}
+                fill="none"
+                strokeDasharray={circumference}
+                strokeDashoffset={strokeDashoffset}
+                strokeLinecap="round"
+              />
+            </Svg>
+            <View style={{ position: 'absolute', alignItems: 'center' }}>
+              <Text style={{ fontSize: 48, fontWeight: 'bold', color: '#ffffff' }}>
+                {count}
+              </Text>
+            </View>
+          </View>
+          <Text style={{ marginTop: 30, fontSize: 16, color: '#ffffff', textAlign: 'center' }}>
+            Total Malas {totalMalas}
+          </Text>
+        </Pressable>
+      </LinearGradient>
     </View>
   );
 }
