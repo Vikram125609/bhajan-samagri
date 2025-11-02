@@ -2,6 +2,7 @@ import * as React from 'react';
 import { View, Text, Image, Pressable, Dimensions, ActivityIndicator } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Svg, { Circle } from 'react-native-svg';
+import CachedImage from './src/utils/CacheImage';
 
 export default function App() {
   const images: string[] = [
@@ -15,7 +16,7 @@ export default function App() {
   const [photoIndex, setPhotoIndex] = React.useState(0);
   const [totalMalas, setTotalMalas] = React.useState(0);
   const [count, setCount] = React.useState(0);
-  const [imageHeight, setImageHeight] = React.useState<number>(200);
+  const [imageHeight, setImageHeight] = React.useState<number>(240);
   const [imageLoading, setImageLoading] = React.useState(true);
   const holdStartRef = React.useRef<number | null>(null);
   const screenWidth = Dimensions.get('window').width;
@@ -64,15 +65,15 @@ export default function App() {
   };
 
   return (
-    <View style={{ height: '100%' }}>
+    <View>
       <LinearGradient
         colors={['#812ab8ff', '#8623c9ff', '#8400ffff']}
         start={{ x: 1, y: 0 }}
         end={{ x: 0, y: 0 }}
         style={{ height: '100%' }}
       >
-        <View style={{ alignItems: 'center' }}>
-          <View style={{ position: 'relative' }}>
+        <View style={{ alignItems: 'center', marginVertical: 10 }}>
+          <View style={{ position: 'relative', width: screenWidth - 20, height: 240 }}>
             {imageLoading && (
               <View style={{
                 position: 'absolute',
@@ -85,38 +86,27 @@ export default function App() {
                 zIndex: 1,
                 backgroundColor: 'rgba(0, 0, 0, 0.3)',
                 borderRadius: 8,
-                marginVertical: 10,
                 width: screenWidth - 20,
                 height: imageHeight,
               }}>
                 <ActivityIndicator size="large" color="#ffffff" />
               </View>
             )}
-            <Image
-              source={{ uri: images[photoIndex] }}
-              onLoadStart={onImageLoadStart}
-              onLoad={onImageLoad}
-              style={{
-                width: screenWidth - 20,
-                height: imageHeight,
-                resizeMode: 'cover',
-                marginVertical: 10,
-                borderRadius: 8,
-              }}
-            />
+            <CachedImage imageUrl={images[photoIndex]} imageLoading={imageLoading} setImageLoading={setImageLoading} />
           </View>
-          <View style={{ backgroundColor: '#f0ad4e', width: '50%', margin: 'auto', borderRadius: 8, marginBottom: 10 }}>
-            <Pressable onPress={handleChangeImage} style={{ padding: 5 }}>
-              <Text style={{
-                color: '#fff',
-                fontWeight: '600',
-                fontSize: 18,
-                textAlign: 'center'
-              }}>
-                Change Image
-              </Text>
-            </Pressable>
-          </View>
+        </View>
+
+        <View style={{ backgroundColor: '#f0ad4e', width: '50%', margin: 'auto', borderRadius: 8, marginBottom: 10 }}>
+          <Pressable onPress={handleChangeImage} style={{ padding: 5 }}>
+            <Text style={{
+              color: '#fff',
+              fontWeight: '600',
+              fontSize: 18,
+              textAlign: 'center'
+            }}>
+              Change Image
+            </Text>
+          </Pressable>
         </View>
 
         <Pressable
