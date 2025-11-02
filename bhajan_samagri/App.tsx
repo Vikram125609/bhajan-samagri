@@ -1,8 +1,11 @@
 import * as React from 'react';
-import { View, Text, Image, Pressable, Dimensions, ActivityIndicator } from 'react-native';
+import { View, Text, Pressable, Dimensions, ActivityIndicator } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
 import LinearGradient from 'react-native-linear-gradient';
 import Svg, { Circle } from 'react-native-svg';
 import CachedImage from './src/utils/CacheImage';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function App() {
   const images: string[] = [
@@ -65,7 +68,7 @@ export default function App() {
   };
 
   return (
-    <View>
+    <SafeAreaProvider>
       <LinearGradient
         colors={['#812ab8ff', '#8623c9ff', '#8400ffff']}
         start={{ x: 1, y: 0 }}
@@ -152,6 +155,6 @@ export default function App() {
           </Text>
         </Pressable>
       </LinearGradient>
-    </View>
+    </SafeAreaProvider>
   );
 }
