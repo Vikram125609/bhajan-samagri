@@ -1,7 +1,7 @@
 import { Text } from "react-native";
 
 function ProfileScreen() {
-  return <Text>This is Jane's profile</Text>;
+  return <Text>Profile</Text>;
 }
 
 export default ProfileScreen;
